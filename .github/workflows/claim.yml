@@ -1,0 +1,23 @@
+name: Bot Epic Games (Revadike)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * *'
+jobs:
+  claim-games:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v3
+      - name: Préparation de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Installation du bot
+        run: npm install
+      - name: Création du passe-droit
+        run: |
+          mkdir -p data
+          echo '${{ secrets.DEVICE_AUTHS }}' > data/device_auths.json
+      - name: Lancement de la récupération !
+        run: npm start
